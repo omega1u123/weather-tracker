@@ -1,4 +1,4 @@
-package com.example.weathertracker.store;
+package com.example.weathertracker.store.entity;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;

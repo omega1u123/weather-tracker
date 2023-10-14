@@ -1,6 +1,7 @@
-package com.example.weathertracker.store;
+package com.example.weathertracker.store.entity;
 
 
+import com.example.weathertracker.store.entity.LocationEntity;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
