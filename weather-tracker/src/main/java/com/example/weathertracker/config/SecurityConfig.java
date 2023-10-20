@@ -1,4 +1,4 @@
-package com.example.weathertracker.security;
+package com.example.weathertracker.config;
 
 import com.example.weathertracker.service.MyUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,7 +28,7 @@ public class SecurityConfig {
                 .and()
                 .formLogin(login -> login
                         //.loginPage("/sign-in")
-                        .defaultSuccessUrl("/page", true)
+                        .defaultSuccessUrl("/hourWeather", true)
                         .permitAll())
                 .logout(logout -> logout
                         .logoutUrl("/logout")

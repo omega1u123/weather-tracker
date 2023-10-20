@@ -7,12 +7,16 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="weather-tracker" />
+        <module name="Weather-tracker" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="weather-tracker" target="17" />
+    </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="Weather-tracker" options="-parameters" />
       <module name="weather-tracker" options="-parameters" />
     </option>
   </component>

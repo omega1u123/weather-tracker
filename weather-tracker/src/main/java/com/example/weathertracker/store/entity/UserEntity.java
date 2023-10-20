@@ -1,7 +1,6 @@
 package com.example.weathertracker.store.entity;
 
 
-import com.example.weathertracker.store.entity.LocationEntity;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -23,8 +22,8 @@ public class UserEntity {
 
     private String password;
 
-    @OneToMany
-    private List<LocationEntity> locations;
+    //@OneToMany
+   // private List<LocationEntity> locations;
 
 
     public UserEntity(String login, String password) {
