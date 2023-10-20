@@ -18,6 +18,13 @@ import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 @Service
 public class WeatherService {
@@ -91,7 +98,7 @@ public class WeatherService {
     }
 
 
-    public ForecastApiResponse getForecastForLocation(LocationEntity location) throws IOException, InterruptedException {
+    public  ForecastApiResponse getForecastForLocation(LocationEntity location) throws IOException, InterruptedException {
             URI uri = buildUriForForecastRequest(location);
             HttpRequest request = buildRequest(uri);
             HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
@@ -109,6 +116,62 @@ public class WeatherService {
         System.out.println(response);
 
         return objectMapper.readValue(response.body(), WeatherApiResponse.class);
+    }
+
+    public static List<ForecastApiResponse.HourlyForecast> getHourlyWeather(List<ForecastApiResponse.HourlyForecast> forecasts,LocationEntity location) throws IOException, InterruptedException {
+        LocalDate day = LocalDate.from(forecasts.get(0).getDate());
+        return forecasts.stream().filter(f -> f.getDate().toLocalDate().isEqual(day)).collect(Collectors.toList());
+    }
+
+
+    public static List<ForecastApiResponse.HourlyForecast> getForecastForDay(List<ForecastApiResponse.HourlyForecast> forecasts, LocalDate day) throws IOException, InterruptedException {
+        return forecasts
+                .stream()
+                .filter(f -> f.getDate().toLocalDate().isEqual(day))
+                .collect(Collectors.toList());
+    }
+
+
+    public static Map<LocalDate, ForecastApiResponse.HourlyForecast> getDailyWeather(List<ForecastApiResponse.HourlyForecast> forecasts) throws IOException, InterruptedException {
+
+        LocationEntity loc = new LocationEntity("minsk");
+
+        Map<LocalDate, ForecastApiResponse.HourlyForecast> dailyForecasts = new HashMap<>();
+
+        LocalDate currentDay = LocalDate.from(forecasts.get(0).getDate());
+        LocalDate lastDay = LocalDate.from(forecasts.get(forecasts.size()-1).getDate());
+
+        while (currentDay.isBefore(lastDay)) {
+            dailyForecasts.put(currentDay, getMaxTemp(getForecastForDay(forecasts, currentDay)));
+            System.out.println(currentDay);
+            currentDay = currentDay.plusDays(1);
+        }
+
+        /*return dailyForecasts.entrySet()
+                .stream()
+                .sorted(Map.Entry.comparingByKey(LocalDate::compareTo))
+                .collect(Collectors.toMap(
+                        Map.Entry::getKey, Map.Entry::getValue,
+                        (oldValue, newValue) -> oldValue,
+                        LinkedHashMap::new)
+                );*/
+        return dailyForecasts;
+    }
+
+
+    public static ForecastApiResponse.HourlyForecast getMaxTemp(List<ForecastApiResponse.HourlyForecast> forecast){
+
+        ForecastApiResponse.HourlyForecast res = forecast.get(0);
+
+        for(int i = 0; i < forecast.size() - 1 ; i++){
+            System.out.println(forecast.get(i).getMain().getTemperatureMaximum());
+            if (res.getMain().getTemperature() < forecast.get(i).getMain().getTemperatureMaximum()){
+                res = forecast.get(i);
+            }
+        }
+
+        return res;
+
     }
 
 

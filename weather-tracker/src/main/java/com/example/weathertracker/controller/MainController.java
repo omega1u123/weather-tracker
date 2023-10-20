@@ -11,6 +11,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.io.IOException;
+import java.time.LocalDate;
+import java.util.List;
+import java.util.Map;
 
 @RestController
 public class MainController {
@@ -59,11 +62,24 @@ public class MainController {
         return weatherService.getForecastForLocation(loc);
     }
 
-    @GetMapping("/getWeather")
+    @GetMapping("/getCurrentWeather")
     public WeatherApiResponse getWeatherForLoc() throws IOException, InterruptedException {
         LocationEntity loc = new LocationEntity("minsk");
         System.out.println(weatherService.getWeatherForLocation(loc).getMain());
         return weatherService.getWeatherForLocation(loc);
+    }
+
+    @GetMapping("/getHourlyWeather")
+    public List<ForecastApiResponse.HourlyForecast> getHourly() throws IOException, InterruptedException {
+        LocationEntity loc = new LocationEntity("minsk");
+        return weatherService.getHourlyWeather(weatherService.getForecastForLocation(loc).getForecasts(), loc);
+    }
+
+    @GetMapping("/getDailyWeather")
+    public Map<LocalDate, ForecastApiResponse.HourlyForecast> getTempForWeek() throws IOException, InterruptedException {
+        LocationEntity loc = new LocationEntity("minsk");
+        System.out.println(weatherService.getDailyWeather(weatherService.getForecastForLocation(loc).getForecasts()));
+        return weatherService.getDailyWeather(weatherService.getForecastForLocation(loc).getForecasts());
     }
 
 
