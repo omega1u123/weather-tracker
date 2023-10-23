@@ -7,7 +7,9 @@ import com.example.weathertracker.store.HourWeather;
 import com.example.weathertracker.store.entity.LocationEntity;
 import com.example.weathertracker.store.model.api.ForecastApiResponse;
 import com.example.weathertracker.store.model.api.WeatherApiResponse;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.io.IOException;
@@ -15,33 +17,16 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
 
+@CrossOrigin
 @RestController
 public class MainController {
 
     private final WeatherService weatherService;
 
-    private final UserService userService;
-
-    public MainController(WeatherService weatherService, UserService userService) {
+    public MainController(WeatherService weatherService) {
         this.weatherService = weatherService;
-        this.userService = userService;
     }
 
-    @GetMapping("/sign-in")
-    public String signIn(){
-        return "sign-in";
-    }
-
-    @GetMapping("/page")
-    public String getPage(){
-        return "page";
-    }
-
-    /*@GetMapping("/weather")
-    public String getWeather(Model model) throws IOException {
-        model.addAttribute("weather", weatherService.getWeather());
-        return "home";
-    }*/
 
     @GetMapping("/weather")
     public CurrentWeather getWeather() throws IOException {

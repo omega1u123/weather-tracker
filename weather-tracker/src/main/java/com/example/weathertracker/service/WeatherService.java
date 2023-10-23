@@ -120,7 +120,10 @@ public class WeatherService {
 
     public static List<ForecastApiResponse.HourlyForecast> getHourlyWeather(List<ForecastApiResponse.HourlyForecast> forecasts,LocationEntity location) throws IOException, InterruptedException {
         LocalDate day = LocalDate.from(forecasts.get(0).getDate());
-        return forecasts.stream().filter(f -> f.getDate().toLocalDate().isEqual(day)).collect(Collectors.toList());
+        return forecasts
+                .stream()
+                .filter(f -> f.getDate().toLocalDate().isEqual(day))
+                .collect(Collectors.toList());
     }
 
 
