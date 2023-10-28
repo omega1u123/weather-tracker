@@ -8,10 +8,10 @@ import lombok.Getter;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Main {
     @JsonProperty("temp")
-    private Double temperature;
+    private Integer temperature;
 
     @JsonProperty("feels_like")
-    private Double temperatureFeelsLike;
+    private Integer temperatureFeelsLike;
 
     @JsonProperty("pressure")
     private Integer pressure;
@@ -24,4 +24,5 @@ public class Main {
 
     @JsonProperty("temp_max")
     private Double temperatureMaximum;
+
 }

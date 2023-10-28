@@ -1,4 +1,4 @@
-package com.example.weathertracker.service;
+/*package com.example.weathertracker.service;
 
 import com.example.weathertracker.store.entity.UserEntity;
 import com.example.weathertracker.store.repository.UserRepo;
@@ -19,3 +19,4 @@ public class UserService {
     }
 
 }
+*/

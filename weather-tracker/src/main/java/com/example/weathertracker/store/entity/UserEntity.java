@@ -22,6 +22,7 @@ public class UserEntity {
 
     private String password;
 
+
     //@OneToMany
    // private List<LocationEntity> locations;
 

@@ -115,6 +115,7 @@ public class WeatherService {
 
         System.out.println(response);
 
+
         return objectMapper.readValue(response.body(), WeatherApiResponse.class);
     }
 
@@ -149,7 +150,6 @@ public class WeatherService {
             System.out.println(currentDay);
             currentDay = currentDay.plusDays(1);
         }
-
         /*return dailyForecasts.entrySet()
                 .stream()
                 .sorted(Map.Entry.comparingByKey(LocalDate::compareTo))

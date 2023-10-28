@@ -1,6 +1,5 @@
 package com.example.weathertracker.controller;
 
-import com.example.weathertracker.service.UserService;
 import com.example.weathertracker.service.WeatherService;
 import com.example.weathertracker.store.CurrentWeather;
 import com.example.weathertracker.store.HourWeather;
@@ -9,13 +8,13 @@ import com.example.weathertracker.store.model.api.ForecastApiResponse;
 import com.example.weathertracker.store.model.api.WeatherApiResponse;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.io.IOException;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
+
 
 @CrossOrigin
 @RestController
@@ -27,6 +26,11 @@ public class MainController {
         this.weatherService = weatherService;
     }
 
+
+    /*@GetMapping("/login")
+    public String getLogin(){
+        return "custom_login";
+    }*/
 
     @GetMapping("/weather")
     public CurrentWeather getWeather() throws IOException {
@@ -50,7 +54,6 @@ public class MainController {
     @GetMapping("/getCurrentWeather")
     public WeatherApiResponse getWeatherForLoc() throws IOException, InterruptedException {
         LocationEntity loc = new LocationEntity("minsk");
-        System.out.println(weatherService.getWeatherForLocation(loc).getMain());
         return weatherService.getWeatherForLocation(loc);
     }
 
